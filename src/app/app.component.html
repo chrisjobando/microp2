@@ -1,0 +1,52 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    {{ title }}!
+  </h1>
+</div>
+
+<div class='class_concesionario'>
+  <form class='classform1' #f='ngForm'>
+    <br />
+    <br />
+    <div class='txtInline'>Filtrar por:</div><input type='search'
+      placeholder="(marca de coche)" name='filter2' [(ngModel)]='filter' />
+    <br />
+    <br />
+
+    <table border='1px' width='700px'>
+      <thead>
+        <td align='center'>Foto</td>
+        <td>Marca</td><td>Modelo</td>
+        <td>Año</td><td>En venta desde</td>
+        <td align='right'>Precio</td>
+        <td align='right'>PVP</td>
+        <td align='center'>Acciones</td>
+      </thead>
+      <tr *ngFor='let id of getFiltered(); let i=index'>
+        <td align='center'>
+          <img src="assets/{{coches[id].photo}}" width='64px'
+            height='64px' *ngIf='[coches[id].photo]!=""' />
+          <p *ngIf='[coches[id].photo]==""'>(sin foto!)</p>
+        </td>
+        <td>{{coches[id].make | uppercase}}</td>
+        <td align='left'>{{coches[id].model | lowercase}}</td>
+        <td align='center'>{{coches[id].model_date | date:'yyyy'}}</td>
+        <td align='center'>{{coches[id].sale_date | date:'MM-yyyy'}}</td>
+        <td align='right'>
+          <p [ngClass]="{goodClassState: [coches[id].state]==CarState.GOOD,
+            badClassState: [coches[id].state]!=CarState.GOOD}">
+            {{coches[id].price | number:'1.0-0'}}€
+          </p>
+        </td>
+        <td align='right'>
+          {{coches[id].getPVP() | number:'1.0-0'}}€
+        </td>
+        <td align='center'>
+          <button type='button' (click)='cmd_lower(id)'>Rebajar</button>
+          <button type='button' (click)='cmd_sell(id)'>Venido</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
